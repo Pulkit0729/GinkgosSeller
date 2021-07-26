@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ginkgos_seller/UI/constant/color.dart';
 import 'package:ginkgos_seller/UI/constant/inputdeco.dart';
+import 'package:ginkgos_seller/UI/screens/main_screen.dart';
+import 'package:ginkgos_seller/UI/widgets/customLoadingBar.dart';
+import 'package:ginkgos_seller/UI/widgets/customSnackBar.dart';
+import 'package:ginkgos_seller/main.dart';
 
 class LoginScreen extends StatelessWidget {
   static String id = 'LoginScreen';
@@ -31,7 +36,7 @@ class LoginScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 TextFormField(
-                                    keyboardType: TextInputType.phone,
+                                    keyboardType: TextInputType.emailAddress,
                                     controller: _email,
                                     validator: (value) {
                                       if (!RegExp(
@@ -41,13 +46,14 @@ class LoginScreen extends StatelessWidget {
                                       }
                                     },
                                     autofocus: true,
-                                    maxLength: 10,
                                     decoration: kTextInputDeco.copyWith(
                                         hintText: 'Email',
                                         counterText: '',
-                                        prefixIcon: Icon(Icons.phone))),
+                                        prefixIcon:
+                                            Icon(Icons.email_outlined))),
+                                SizedBox(height: 10),
                                 TextFormField(
-                                    keyboardType: TextInputType.phone,
+                                    keyboardType: TextInputType.text,
                                     controller: _password,
                                     validator: (value) {
                                       if (value == null) {
@@ -55,22 +61,45 @@ class LoginScreen extends StatelessWidget {
                                       }
                                     },
                                     obscureText: true,
-                                    autofocus: true,
-                                    maxLength: 10,
                                     decoration: kTextInputDeco.copyWith(
                                         hintText: 'Password',
                                         counterText: '',
-                                        prefixIcon: Icon(Icons.phone))),
-                                SizedBox(height: 10),
+                                        prefixIcon:
+                                            Icon(Icons.vpn_key_outlined))),
+                                SizedBox(height: 20),
                                 Material(
-                                    color: Colors.blue,
+                                    color: kPrimaryDark,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
                                     child: MaterialButton(
-                                        onPressed: () {
-                                          _formKey.currentState!.validate();
+                                        onPressed: () async {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            LoadingBar.createLoading(context);
+                                            await FirebaseAuth.instance
+                                                .signInWithEmailAndPassword(
+                                                    email: _email.text,
+                                                    password: _password.text)
+                                                .then((value) => {
+                                                      Navigator.popAndPushNamed(
+                                                          context,
+                                                          MainScreen.id,
+                                                          arguments:
+                                                              ScreenArguments(
+                                                                  index: 0))
+                                                    })
+                                                .catchError((err) {
+                                              Navigator.pop(context);
+                                              CustomSnackWidgets
+                                                  .buildErrorSnackBar(
+                                                      context,
+                                                      err.hashCode == 185768934
+                                                          ? 'Invalid Password'
+                                                          : 'Login Failed');
+                                            });
+                                          }
                                         },
-                                        child: Text('LogIN',
+                                        child: Text('Login',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 18,
