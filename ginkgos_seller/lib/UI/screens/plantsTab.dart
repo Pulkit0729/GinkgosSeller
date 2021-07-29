@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:ginkgos_seller/UI/screens/storeProductListTab.dart';
+import 'package:ginkgos_seller/UI/constant/color.dart';
+import 'package:ginkgos_seller/UI/screens/inventoryAndStore.dart';
+import 'package:ginkgos_seller/UI/screens/productListTab.dart';
+import 'package:ginkgos_seller/backend/models/categoryClass.dart';
 
-class PlantsTab extends StatefulWidget {
-  const PlantsTab({Key? key}) : super(key: key);
+class PlantsTab extends StatelessWidget {
+  final String type;
 
-  @override
-  _PlantsTabState createState() => _PlantsTabState();
-}
-
-class _PlantsTabState extends State<PlantsTab>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-  @override
-  void initState() {
-    _tabController = TabController(length: 4, vsync: this);
-    super.initState();
-  }
+  const PlantsTab({Key? key, required this.type}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +20,11 @@ class _PlantsTabState extends State<PlantsTab>
               toolbarHeight: 60,
               bottom: TabBar(
                   isScrollable: true,
-                  indicatorColor: Colors.blue,
+                  indicatorColor: type == InventoryAndStore.inventory
+                      ? Colors.blue
+                      : kStoreColor,
                   indicatorWeight: 4,
                   labelColor: Colors.black,
-                  controller: _tabController,
                   tabs: [
                     Column(children: [Text('Ornamentals')]),
                     Column(children: [
@@ -42,19 +35,22 @@ class _PlantsTabState extends State<PlantsTab>
                     Text('Medicinal')
                   ])),
           body: TabBarView(
-            controller: _tabController,
             children: [
               ProductListTab(
-                category: 'Ornamentals',
+                type: type,
+                category: Category.ornamental,
               ),
               ProductListTab(
-                category: 'Flowers',
+                type: type,
+                category: Category.flowers,
               ),
               ProductListTab(
-                category: 'Fruits',
+                type: type,
+                category: Category.fruits,
               ),
               ProductListTab(
-                category: 'Medicinal',
+                type: type,
+                category: Category.medicine,
               ),
             ],
           ),

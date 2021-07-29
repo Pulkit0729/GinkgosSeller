@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ginkgos_seller/UI/screens/balanceScreen.dart';
 import 'package:ginkgos_seller/UI/screens/completedOrders.dart';
-import 'package:ginkgos_seller/UI/screens/ginkgosStore.dart';
+import 'package:ginkgos_seller/UI/screens/inventoryAndStore.dart';
 import 'package:ginkgos_seller/UI/screens/helpScreen.dart';
-import 'package:ginkgos_seller/UI/screens/inventoryScreen.dart';
 import 'package:ginkgos_seller/UI/screens/profileScreen.dart';
+import 'package:ginkgos_seller/main.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
@@ -12,45 +12,39 @@ class DrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Scaffold(
-        body: SafeArea(
-          child: ListView(
-            children: [
-              DrawerTile(
-                title: 'My Profile',
-                iconData: Icons.account_circle_sharp,
-                route: ProfileScreen.id,
-              ),
-              DrawerTile(
-                title: 'Completed Orders',
-                iconData: Icons.thumb_up_alt_outlined,
-                route: CompletedOrders.id,
-              ),
-              DrawerTile(
-                title: 'Balance',
-                iconData: Icons.account_balance_outlined,
-                route: BalanceScreen.id,
-              ),
-              DrawerTile(
-                title: 'My Inventory',
-                iconData: Icons.inventory_2_outlined,
-                route: InventoryScreen.id,
-              ),
-              DrawerTile(
-                title: 'Ginkgos Store',
-                iconData: Icons.store_mall_directory_outlined,
-                route: GinkgosStoreScreen.id,
-              ),
-              DrawerTile(
-                title: 'Help',
-                iconData: Icons.help_outline,
-                route: HelpScreen.id,
-              ),
-            ],
-          ),
-        ),
+        child: Scaffold(
+            body: SafeArea(
+                child: ListView(children: [
+      DrawerTile(
+        title: 'My Profile',
+        iconData: Icons.account_circle_sharp,
+        route: ProfileScreen.id,
       ),
-    );
+      DrawerTile(
+        title: 'Completed Orders',
+        iconData: Icons.thumb_up_alt_outlined,
+        route: CompletedOrders.id,
+      ),
+      DrawerTile(
+        title: 'Balance',
+        iconData: Icons.account_balance_outlined,
+        route: BalanceScreen.id,
+      ),
+      DrawerTile(
+        title: 'My Inventory',
+        iconData: Icons.inventory_2_outlined,
+        route: InventoryAndStore.id,
+        arguments: ScreenArguments(type: InventoryAndStore.inventory),
+      ),
+      DrawerTile(
+        title: 'Ginkgos Store',
+        iconData: Icons.store_mall_directory_outlined,
+        route: InventoryAndStore.id,
+        arguments: ScreenArguments(type: InventoryAndStore.store),
+      ),
+      DrawerTile(
+          title: 'Help', iconData: Icons.help_outline, route: HelpScreen.id)
+    ]))));
   }
 }
 
@@ -65,7 +59,7 @@ class DrawerTile extends StatelessWidget {
   final title;
   final String route;
   final iconData;
-  final arguments;
+  final ScreenArguments? arguments;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,7 +73,7 @@ class DrawerTile extends StatelessWidget {
             child: Icon(iconData, color: Colors.red)),
         horizontalTitleGap: 0,
         onTap: () {
-          Navigator.popAndPushNamed(context, route);
+          Navigator.popAndPushNamed(context, route, arguments: arguments);
         },
       ),
     );

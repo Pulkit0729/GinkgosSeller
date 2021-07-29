@@ -81,12 +81,11 @@ class LoginScreen extends StatelessWidget {
                                                     email: _email.text,
                                                     password: _password.text)
                                                 .then((value) => {
-                                                      Navigator.popAndPushNamed(
-                                                          context,
-                                                          MainScreen.id,
-                                                          arguments:
-                                                              ScreenArguments(
-                                                                  index: 0))
+                                                      Navigator
+                                                          .pushNamedAndRemoveUntil(
+                                                              context,
+                                                              MainScreen.id,
+                                                              (route) => false)
                                                     })
                                                 .catchError((err) {
                                               Navigator.pop(context);

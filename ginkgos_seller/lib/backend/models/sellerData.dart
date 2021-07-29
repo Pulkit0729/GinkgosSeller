@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SellerData {
   final String name;
@@ -16,10 +17,10 @@ class SellerData {
   });
 }
 
-Future<SellerData> getData() async {
+Future<SellerData> getSellerData() async {
   final _sellers = FirebaseFirestore.instance.collection('Sellers');
   return await _sellers
-      .doc('iYsIubcsPp0plQJdD2Wp')
+      .doc(FirebaseAuth.instance.currentUser!.email!.split('@')[0])
       .get()
       .then((DocumentSnapshot documentSnapshot) {
     if (documentSnapshot.exists) {

@@ -14,7 +14,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text('My Profile')),
         body: FutureBuilder(
-          future: getData(),
+          future: getSellerData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.hasData) {
               return ListView(children: [

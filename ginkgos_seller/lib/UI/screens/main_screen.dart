@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     _bottomDrawerOptions = <Widget>[
       NewOrdersScreen(),
-      AcceptedOrders(),
+      AcceptedOrdersScreen(),
       OutForDelivery(),
     ];
 
@@ -81,7 +81,7 @@ class _MainScreenState extends State<MainScreen> {
             label: 'New',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
+            icon: Icon(Icons.check_box),
             label: 'Accepted',
           ),
           BottomNavigationBarItem(

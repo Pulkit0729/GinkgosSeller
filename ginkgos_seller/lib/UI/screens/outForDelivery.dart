@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ginkgos_seller/UI/widgets/orderTile.dart';
-import 'package:ginkgos_seller/backend/models/newOrderObject.dart';
+import 'package:ginkgos_seller/UI/widgets/newOrderTile.dart';
+import 'package:ginkgos_seller/backend/models/orderObject.dart';
 
 class OutForDelivery extends StatelessWidget {
   const OutForDelivery({Key? key}) : super(key: key);
@@ -11,12 +11,7 @@ class OutForDelivery extends StatelessWidget {
         shrinkWrap: true,
         itemCount: 1,
         itemBuilder: (BuildContext context, int index) {
-          return OrderTile(
-            newOrder: Order(
-                orderDate: '11-11-11',
-                orderId: '1212121212',
-                status: 'Out for delivery'),
-          );
+          return Container();
         });
   }
 }
