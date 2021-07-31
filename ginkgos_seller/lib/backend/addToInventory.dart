@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 Future<http.Response> addToInventory(
     IncompleteInventoryProduct incompleteInventoryProduct,
     String sellerId) async {
-  String _url = 'http://13.127.160.96/api/v1/store/add';
+  String _url = 'https://www.gikgos.online/api/v1/store/add';
 
   var data = await http
       .post(

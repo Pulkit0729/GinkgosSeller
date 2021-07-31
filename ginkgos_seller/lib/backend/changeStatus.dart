@@ -10,18 +10,33 @@ Future<void> acceptOrders(String orderId) async {
       .child('Status')
       .set('Accepted')
       .then((value) => {});
-  var colRef = FirebaseFirestore.instance
+
+  var docRef = FirebaseFirestore.instance
       .collection('Sellers')
-      .doc(FirebaseAuth.instance.currentUser!.email!.split('@')[0])
-      .collection('IdCollection');
-  await colRef
+      .doc(FirebaseAuth.instance.currentUser!.email!.split('@')[0]);
+
+  await docRef
+      .collection('IdCollection')
       .doc('New')
       .update({orderId: FieldValue.delete()})
       .then((value) => print("User's Property Deleted"))
       .catchError((error) => print("Failed to delete user's property: $error"));
-  await colRef
+  await docRef
+      .collection('IdCollection')
       .doc('Accepted')
       .set({orderId: orderId}, SetOptions(merge: true))
       .then((value) => true)
       .onError((error, stackTrace) => false);
+
+  await docRef.get().then((value) async {
+    if (value.exists) {
+      dynamic _nestedDBoy = value.get(FieldPath(['DBoy']));
+      await FirebaseFirestore.instance
+          .collection('Delivery_Boys')
+          .doc(_nestedDBoy.toString())
+          .collection('IdCollection')
+          .doc('New')
+          .set({orderId: orderId}, SetOptions(merge: true));
+    }
+  });
 }

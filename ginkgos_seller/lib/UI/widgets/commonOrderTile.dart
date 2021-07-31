@@ -10,9 +10,12 @@ class ItemTile extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(
-          '${orderItem.qty} x ${orderItem.name}',
-          style: TextStyle(fontSize: 16),
+        Expanded(
+          child: Text(
+            '${orderItem.qty} x ${orderItem.name}',
+            style: TextStyle(fontSize: 15),
+            maxLines: 1,
+          ),
         ),
         Text('Rs${orderItem.price}')
       ]),
@@ -49,7 +52,11 @@ class CommonOrderTile extends StatelessWidget {
         SizedBox(height: 5),
         Divider(thickness: 1),
         SizedBox(height: 5),
-        Text('Total : ${sum.toString()} ', style: TextStyle(fontSize: 16)),
+        Text(
+          'Total : ${sum.toString()} ',
+          style: TextStyle(fontSize: 16),
+          textAlign: TextAlign.right,
+        ),
       ],
     );
   }

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<dynamic>> storeSearchQuery(String text) async {
-  String _url = 'http://13.127.160.96/api/v1/store/search';
+  String _url = 'https://www.gikgos.online/api/v1/store/search';
 
   var data = await http.post(Uri.parse(_url),
       headers: <String, String>{
@@ -16,7 +16,7 @@ Future<List<dynamic>> storeSearchQuery(String text) async {
 }
 
 Future<List<dynamic>> inventorySearchQuery(String text) async {
-  String _url = 'http://13.127.160.96//api/v1/seller/inventory/search';
+  String _url = 'https://www.gikgos.online/api/v1/seller/inventory/search';
 
   var data = await http.post(Uri.parse(_url),
       headers: <String, String>{

@@ -44,7 +44,7 @@ class _NewOrdersScreenState extends State<NewOrdersScreen> {
               builder:
                   (BuildContext context, AsyncSnapshot<List<Order>> snapshot1) {
                 if (snapshot1.connectionState == ConnectionState.done) {
-                  if (snapshot1.hasData) {
+                  if (snapshot1.hasData && snapshot1.data.toString() != '[]') {
                     return ListView.builder(
                       shrinkWrap: true,
                       itemCount: snapshot1.data!.length,
@@ -53,7 +53,11 @@ class _NewOrdersScreenState extends State<NewOrdersScreen> {
                       },
                     );
                   } else {
-                    return Text('Check Connection');
+                    return Center(
+                        child: Text(
+                      'No New Orders',
+                      style: TextStyle(fontSize: 16),
+                    ));
                   }
                 } else {
                   return SpinKitCircle(color: kLoadingColor);

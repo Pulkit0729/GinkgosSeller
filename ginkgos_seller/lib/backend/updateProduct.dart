@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 
 Future<http.Response> updateInstock(
     {required String inStock, required String itemId}) async {
-  String _url = 'http://13.127.160.96/api/v1/seller/inventory/updateInstock';
+  String _url =
+      'https://www.gikgos.online/api/v1/seller/inventory/updateInstock';
   return await http.patch(Uri.parse(_url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -15,7 +16,7 @@ Future<http.Response> updateInstock(
 Future<http.Response> updateSellingPrice(
     {required String sellingPrice, required String itemId}) async {
   print(sellingPrice);
-  String _url = 'http://13.127.160.96/api/v1/seller/inventory/updateSP';
+  String _url = 'https://www.gikgos.online/api/v1/seller/inventory/updateSP';
   return await http.patch(Uri.parse(_url),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
